@@ -334,4 +334,4 @@
 
 ### 流程图
 
-![memelink](./image/memelink.png)
+![memelink](../image/memelink.png)
