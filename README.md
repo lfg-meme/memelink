@@ -289,7 +289,7 @@ Users need to upload a file to GitHub for registration.
 
 ### Sequence Diagram Explanation
 
-![memelink](.\doc\image\memelink.png)
+![memelink](./doc/image/memelink.png)
 
 The sequence diagram illustrates the interaction between the tweet, client, and server during the link sharing and transaction process:
 
