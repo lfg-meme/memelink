@@ -41,9 +41,6 @@
    - **api_host**: API 网址
    - **chain_id**: 链ID
    - **short_host**: 平台简称  用来做申请链接的字段
-   - **type**: 规则类型  跟路径下的规则字段
-   - **meta_url**: 返回元数据的接口路径
-   - **sign_url**: 操作签名的接口路径
 
 2. **编辑 JSON 文件**：
    将上述注册信息编辑成 JSON 格式文件。例如：
@@ -53,10 +50,7 @@
        "host": "app.uniswap.org",
        "api_host": "interface.gateway.uniswap.org",
        "chain_id": "1",
-       "short_host": "uniswap",
-       "type": "swap",
-       "meta_url": "/metadata",
-       "sign_url": "/sign"
+       "short_host": "uniswap"
    }
    ```
 
