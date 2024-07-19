@@ -42,13 +42,10 @@ The plugin is the core component of the system, responsible for the following ta
        "host": "app.uniswap.org",
        "api_host": "interface.gateway.uniswap.org",
        "chain_id": "1",
-       "short_host": "uniswap",
-       "type": "swap",
-       "meta_url": "/metadata",
-       "sign_url": "/sign"
+       "short_host": "uniswap"
    }
    ```
-
+   
 2. **Edit JSON File**:
    Edit the above registration information into a JSON format file.
 
@@ -159,10 +156,7 @@ Users need to add a `memelinks.json` file to the root directory of their platfor
           "host": "userplatform.com",
           "api_host": "api.userplatform.com",
           "chain_id": "1",
-          "short_host": "userplatform",
-          "type": "trade",
-          "meta_url": "/metadata",
-          "sign_url": "/sign"
+          "short_host": "userplatform"
       }
       ```
       Then, according to the rule, accessing the root path `https://userplatform.com/memelinks.json` might return:
@@ -187,44 +181,44 @@ Below is a detailed development process for how a user platform can integrate wi
 **API Definition**
 
 - **Request Method**: GET
-- **URL**: `https://api.memelinks.xyz/link/presell/metadata`
+- **URL**: `https://api.memelinks.xyz/link/presell`
 - **Response Data Format**:
   ```json
   {
-      "title": "Buy with SOL",
-      "icon": "https://rwa.trading/lfg/images/ef1bcc1d-9d4b-4827-92f3-0dcada6ff6d3.png",
-      "description": "Participate in the presale by transferring SOL. Choose an amount of SOL from the options below, or enter a custom amount.",
-      "label": "Buy SOL",
-      "chainId": 901,
-      "neuron": {
-          "impulses": [
-              {
-                  "label": "0.01 SOL",
-                  "href": "/api/memelink/presell/0.01",
-                  "parameters": null
-              },
-              {
-                  "label": "0.05 SOL",
-                  "href": "/api/memelink/presell/0.05",
-                  "parameters": null
-              },
-              {
-                  "label": "0.1 SOL",
-                  "href": "/api/memelink/presell/0.1",
-                  "parameters": null
-              },
-              {
-                  "label": "Buy hhhh",
-                  "href": "/api/memelink/presell/{amount}",
-                  "parameters": [
-                      {
-                          "name": "amount",
-                          "label": "Enter a custom SOL amount"
-                      }
-                  ]
-              }
-          ]
-      }
+  	"title": "Buy with SOL",
+  	"icon": "https://rwa.trading/lfg/images/ef1bcc1d-9d4b-4827-92f3-0dcada6ff6d3.png",
+  	"description": "Participate in the presale by transferring SOL. Choose an amount of SOL from the options below, or enter a custom amount.",
+  	"label": "Buy SOL",
+  	"chainId": 901,
+  	"neuron": {
+  		"impulses": [
+  			{
+  				"label": "0.01 SOL",
+  				"href": "https://api.memelinks.xyz/link/presell/0.01",
+  				"parameters": null
+  			},
+  			{
+  				"label": "0.05 SOL",
+  				"href": "https://api.memelinks.xyz/link/presell/0.05",
+  				"parameters": null
+  			},
+  			{
+  				"label": "0.1 SOL",
+  				"href": "https://api.memelinks.xyz/link/presell/0.1",
+  				"parameters": null
+  			},
+  			{
+  				"label": "Buy hhhh",
+  				"href": "https://api.memelinks.xyz/link/presell/{amount}",
+  				"parameters": [
+  					{
+  						"name": "amount",
+  						"label": "Enter a custom SOL amount"
+  					}
+  				]
+  			}
+  		]
+  	}
   }
   ```
 
@@ -233,7 +227,7 @@ Below is a detailed development process for how a user platform can integrate wi
 **API Definition**
 
 - **Request Method**: POST
-- **URL**: `https://api.memelinks.xyz/link/presell/sign/0.01`
+- **URL**: `https://api.memelinks.xyz/link/presell/0.01`
 - **Request Body**:
   ```json
   {
@@ -260,12 +254,12 @@ Users need to add a `memelinks.json` file to the root directory of their platfor
 
 ```json
 {
-    "rules": [
-        {
-            "pathPattern": "/presell/",
-            "apiPath": "https://api.memelinks.xyz/api/memelink/presell/**"
-        }
-    ]
+  "rules": [
+    {
+      "pathPattern": "/presell/**",
+      "apiPath": "https://api.memelinks.xyz/link/presell/"
+    }
+  ]
 }
 ```
 
@@ -280,34 +274,10 @@ Users need to upload a file to GitHub for registration.
     "host": "memelinks.xyz",
     "api_host": "api.memelinks.xyz",
     "chain_id": "1",
-    "short_host": "memelink",
-    "type": "presell",
-    "meta_url": "/link/presell/metadata",
-    "sign_url": "/link/presell/sign"
+    "short_host": "memelink"
 }
 ```
 
 ### Sequence Diagram Explanation
 
 ![memelink](./doc/image/memelink.png)
-
-The sequence diagram illustrates the interaction between the tweet, client, and server during the link sharing and transaction process:
-
-1. **User Shares a Link**:
-   - Example: `https://memelinks.xyz/presell`
-2. **Plugin Requests JSON Configuration File**:
-   - URL: `https://memelinks.xyz/memelinks.json`
-3. **Plugin Retrieves Rule URL Based on JSON Configuration**:
-   - URL: `https://api.memelinks.xyz/api/memelink/presell`
-4. **Plugin Requests Metadata Based on Registered Information**:
-   - URL: `https://api.memelinks.xyz/link/presell/metadata`
-5. **Plugin Renders the Metadata on the Tweet**:
-   - The plugin displays the retrieved metadata on the tweet.
-6. **User Clicks to Purchase**:
-   - User initiates a purchase by clicking on an option.
-7. **Plugin Requests to Construct Transaction**:
-   - URL: `https://api.memelinks.xyz/api/memelink/presell/0.1`
-8. **Plugin Forwards Transaction Information Request and Returns Transaction Information**:
-   - URL: `https://api.memelinks.xyz/link/presell/sign/0.1`
-9. **Wallet Finalizes the Transaction**:
-   - The wallet processes the transaction and completes it.

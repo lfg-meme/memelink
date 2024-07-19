@@ -41,10 +41,7 @@
    - **api_host**: API 网址
    - **chain_id**: 链ID
    - **short_host**: 平台简称  用来做申请链接的字段
-   - **type**: 规则类型  跟路径下的规则字段
-   - **meta_url**: 返回元数据的接口路径
-   - **sign_url**: 操作签名的接口路径
-
+   
 2. **编辑 JSON 文件**：
    将上述注册信息编辑成 JSON 格式文件。例如：
 
@@ -53,13 +50,10 @@
        "host": "app.uniswap.org",
        "api_host": "interface.gateway.uniswap.org",
        "chain_id": "1",
-       "short_host": "uniswap",
-       "type": "swap",
-       "meta_url": "/metadata",
-       "sign_url": "/sign"
+       "short_host": "uniswap"
    }
    ```
-
+   
 3. **提交申请**：
    将编辑好的 JSON 文件提交至我们的 GitHub 仓库，申请注册。
 
@@ -195,27 +189,24 @@
           "host": "userplatform.com",
           "api_host": "api.userplatform.com",
           "chain_id": "1",
-          "short_host": "userplatform",
-          "type": "trade",
-          "meta_url": "/metadata",
-          "sign_url": "/sign"
+          "short_host": "userplatform"
       }
       ```
-    
+      
       那么根据规则，访问根路径 `https://userplatform.com/memelinks.json`，返回数据
-    
+      
       ```
       {
           "rules": [
               {
                   "pathPattern": "/trade/**",
-                  "apiPath": "https://api.memelinks.xyz/api/userplatform/trade/**"
+                  "apiPath": "https://api.userplatform.com/api/trade/**"
               }
           ]
       }
       ```
-    
-      API 请求元数据路径在服务器将被拼接为 `https://api.userplatform.com/metadata/abc?param=value`。
+      
+      API 请求元数据路径在服务器将被拼接为 `https://api.userplatform.com/api/trade/abc?param=value`。
 
 ### 对接示例
 
@@ -227,7 +218,7 @@
 
 - **请求方式**：GET
 
-- **URL**：`https://api.memelinks.xyz/link/presell/metadata`
+- **URL**：`https://api.memelinks.xyz/link/presell`
 
 - **返回数据格式**：
 
@@ -242,22 +233,22 @@
   		"impulses": [
   			{
   				"label": "0.01 SOL",
-  				"href": "/api/memelink/presell/0.01",
+  				"href": "https://api.memelinks.xyz/link/presell/0.01",
   				"parameters": null
   			},
   			{
   				"label": "0.05 SOL",
-  				"href": "/api/memelink/presell/0.05",
+  				"href": "https://api.memelinks.xyz/link/presell/0.05",
   				"parameters": null
   			},
   			{
   				"label": "0.1 SOL",
-  				"href": "/api/memelink/presell/0.1",
+  				"href": "https://api.memelinks.xyz/link/presell/0.1",
   				"parameters": null
   			},
   			{
   				"label": "Buy hhhh",
-  				"href": "/api/memelink/presell/{amount}",
+  				"href": "https://api.memelinks.xyz/link/presell/{amount}",
   				"parameters": [
   					{
   						"name": "amount",
@@ -305,13 +296,13 @@
 
 ```json
 {
-    "rules": [
-      {
-        "pathPattern": "/presell/",
-        "apiPath": "https://api.memelinks.xyz/api/memelink/presell/**"
-      }
-    ]
-  }
+  "rules": [
+    {
+      "pathPattern": "/presell/**",
+      "apiPath": "https://api.memelinks.xyz/link/presell/"
+    }
+  ]
+}
 ```
 
 #### 4. 申请注册的json文件
@@ -325,13 +316,47 @@
     "host": "memelinks.xyz",
     "api_host": "api.memelinks.xyz",
     "chain_id": "1",
-    "short_host": "memelink",
-    "type": "presell",
-    "meta_url": "/link/presell/metadata",
-    "sign_url": "/link/presell/sign"
+    "short_host": "memelink"
 }
 ```
 
 ### 流程图
 
 ![memelink](../image/memelink.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
